@@ -34,12 +34,34 @@
             justify-content: space-between;
         }
 
+        .logo-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .curved-text-svg {
+            width: 320px;
+            height: 60px;
+            margin-bottom: -10px;
+        }
+
+        .curved-text {
+            font-size: 14px;
+            font-weight: bold;
+            fill: #8B0000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
         .school-logo {
             width: 180px;
             height: 180px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 20px;
             border: 3px solid #8B0000;
         }
 
@@ -49,6 +71,7 @@
             color: #8B0000;
             text-align: center;
             text-transform: uppercase;
+            margin-top: 15px;
             margin-bottom: 10px;
             letter-spacing: 2px;
         }
@@ -155,7 +178,20 @@
 </head>
 <body>
     <div class="front-page">
-        <img src="images.jpg" alt="School Logo" class="school-logo">
+        <div class="logo-container">
+            <!-- Curved text above logo (semi-circle arc like PowerPoint) -->
+            <svg class="curved-text-svg" viewBox="0 0 320 60">
+                <defs>
+                    <path id="curve" d="M 10,55 Q 160,0 310,55" fill="transparent"/>
+                </defs>
+                <text class="curved-text">
+                    <textPath href="#curve" startOffset="50%" text-anchor="middle">
+                        Shree Kali Devi Vidya Mandir
+                    </textPath>
+                </text>
+            </svg>
+            <img src="images.jpg" alt="School Logo" class="school-logo">
+        </div>
         
         <h1 class="school-name">Shree Kali Devi Vidya Mandir</h1>
         <p class="school-location">Hansi</p>
