@@ -19,11 +19,24 @@ import subprocess
 import platform
 
 def convert_docx_to_pdf():
+    """
+    Convert DOCX report to PDF using available tools.
+    
+    Returns:
+        bool: True if conversion succeeded, False otherwise
+    """
     docx_file = "Employee Payroll Management System - Project Report.docx"
     pdf_file = "Employee Payroll Management System - Project Report.pdf"
     
-    if not os.path.exists(docx_file):
-        print(f"Error: {docx_file} not found!")
+    # Get the directory where this script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(script_dir)
+    docx_path = os.path.join(parent_dir, "docs", docx_file)
+    pdf_path = os.path.join(parent_dir, "docs", pdf_file)
+    
+    if not os.path.exists(docx_path):
+        print(f"Error: {docx_file} not found at {docx_path}!")
+        print(f"Please run this script from the repository root or ensure the docs folder exists.")
         return False
     
     system = platform.system()
@@ -32,11 +45,14 @@ def convert_docx_to_pdf():
         try:
             from docx2pdf import convert
             print(f"Converting {docx_file} to PDF...")
-            convert(docx_file, pdf_file)
+            convert(docx_path, pdf_path)
             print(f"✓ Successfully created {pdf_file}")
             return True
         except ImportError:
             print("Error: docx2pdf module not found. Install it with: pip install docx2pdf")
+            return False
+        except OSError as e:
+            print(f"Error: File operation failed - {e}")
             return False
         except Exception as e:
             print(f"Error during conversion: {e}")
@@ -53,7 +69,8 @@ def convert_docx_to_pdf():
         for cmd in libreoffice_commands:
             try:
                 result = subprocess.run(
-                    [cmd, "--headless", "--convert-to", "pdf", docx_file],
+                    [cmd, "--headless", "--convert-to", "pdf", "--outdir", 
+                     os.path.dirname(pdf_path), docx_path],
                     capture_output=True,
                     text=True,
                     timeout=60
@@ -61,7 +78,17 @@ def convert_docx_to_pdf():
                 if result.returncode == 0:
                     print(f"✓ Successfully created {pdf_file}")
                     return True
-            except (FileNotFoundError, subprocess.TimeoutExpired):
+                else:
+                    print(f"LibreOffice exited with code {result.returncode}")
+                    if result.stderr:
+                        print(f"Error: {result.stderr}")
+            except FileNotFoundError:
+                continue
+            except subprocess.TimeoutExpired:
+                print(f"Warning: {cmd} timed out after 60 seconds")
+                continue
+            except OSError as e:
+                print(f"Error running {cmd}: {e}")
                 continue
         
         print("Error: LibreOffice not found!")

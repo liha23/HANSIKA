@@ -113,6 +113,8 @@ mydb = mysql.connector.connect(
 )
 ```
 
+> **⚠️ Security Note**: Never commit actual database credentials to version control. For production use, consider using environment variables or secure configuration files. This example uses hardcoded credentials for educational purposes only.
+
 ## 💻 Usage
 
 ### Running the Application
