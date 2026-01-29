@@ -168,6 +168,7 @@ HANSIKA/
 ├── LICENSE                                        # MIT License
 ├── README.md                                      # This file
 ├── CONTRIBUTING.md                                # Contribution guidelines
+├── CODE_OF_CONDUCT.md                            # Code of Conduct
 ├── docs/                                          # Documentation folder
 │   ├── Employee Payroll Management System - Project Report.docx
 │   ├── Employee Payroll Management System - Project Report.pdf
@@ -198,7 +199,7 @@ The `scripts/` folder contains utility scripts:
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) before getting started.
 
 ### Ways to Contribute
 
